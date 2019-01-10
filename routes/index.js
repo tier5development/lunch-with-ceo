@@ -58,7 +58,7 @@ router.get('/', function(req, res, next) {
 		if(data) {
 			res.render('index', { 
 				title:'Welcome to Lunch with CEO App',
-				message: "Wow! We found the lucky emplyoee for this week. That person's name is :: ",
+				message: "Wow! We found the lucky employee for this week. That person's name is :: ",
 				selected_employee: data
 			});
 		} else {
