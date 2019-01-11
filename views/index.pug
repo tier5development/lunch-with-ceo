@@ -1,7 +1,25 @@
 extends layout
 
 block content
-  h1= title
-  p #{message} #{employee_details.selected}
-  p Employees left in E_E.txt #{employee_details.ee}
-  p Employees are in S_E.txt file #{employee_details.se}
+	h1= title
+	p(style="width: 100%") #{message} 
+		strong #{employee_details.selected}
+	div(style="width: 100%")
+		div(style="float: left")
+			table
+				thead
+					tr: th Employees in E_E.txt
+				tbody
+					each ee, i in employee_details.ee
+						tr
+							td 
+								span(style="padding-top: 20px;") Name: #{ee}
+		div(style="float: left; margin-left: 20px")
+			table
+				thead
+					tr: th Employees in S_E.txt
+				tbody
+					each se, i in employee_details.se
+						tr
+							td 
+								span(style="padding-top: 20px;") Name: #{se}

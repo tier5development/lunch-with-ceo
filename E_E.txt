@@ -1,1 +1,1 @@
-Abhishek,Ujjal,Pratim,Subhadip,Suvadeep,Sourav,Amit,Prodipto,Samim,Deepjyoti,Neil,Tania,Ankita dev,Suman,Santanu Singha,Ashish,Durgesh,Nupur,Gautam,Akash,Malay,Kaushik HR,Ankita HR,Bisakha
+Pratim,Sourav,Deepjyoti,Tania,Malay,Samim,Neil,Ankita dev,Suman,Ashish,Durgesh,Nupur,Bisakha,Prodipto,Ankita HR,Akash,Amit,Ujjal,Suvadeep,Abhishek,Santanu Singha,Kaushik HR,Subhadip

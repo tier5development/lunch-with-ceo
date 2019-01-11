@@ -42,9 +42,10 @@ function lunch_with_ceo() {
 				var all_employees = buf.toString().split(",");
 
 				var selected_employee = getRandomInt(all_employees.length);
-			    write_in_file(all_employees[selected_employee], all_employees.filter(item => item !== all_employees[selected_employee]));
+				var other_employees = all_employees.filter(item => item !== all_employees[selected_employee]);
+			    write_in_file(all_employees[selected_employee], other_employees);
 			    fs.readFile('S_E.txt', function(err, buff) {
-			    	resolve({selected: all_employees[selected_employee], ee: all_employees.filter(item => item !== all_employees[selected_employee]), se: buff.toString().split(",")});
+			    	resolve({selected: all_employees[selected_employee], ee: other_employees, se: buff.toString().split(",")});
 			    });
 			} else {
 				rewrite_file();
