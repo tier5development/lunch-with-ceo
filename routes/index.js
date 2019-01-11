@@ -43,7 +43,9 @@ function lunch_with_ceo() {
 
 				var selected_employee = getRandomInt(all_employees.length);
 			    write_in_file(all_employees[selected_employee], all_employees.filter(item => item !== all_employees[selected_employee]));
-			    resolve(all_employees[selected_employee]);
+			    fs.readFile('S_E.txt', function(err, buff) {
+			    	resolve({selected: all_employees[selected_employee], ee: all_employees.filter(item => item !== all_employees[selected_employee]), se: buff.toString().split(",")});
+			    });
 			} else {
 				rewrite_file();
 				resolve(false);
@@ -58,8 +60,8 @@ router.get('/', function(req, res, next) {
 		if(data) {
 			res.render('index', { 
 				title:'Welcome to Lunch with CEO App',
-				message: "Wow! We found the lucky employee for this week. That person's name is :: ",
-				selected_employee: data
+				message: "Wow! We found the lucky emplyoee for this week. That person's name is :: ",
+				employee_details: data
 			});
 		} else {
 			res.redirect('/');

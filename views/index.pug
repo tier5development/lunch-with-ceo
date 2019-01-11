@@ -2,4 +2,6 @@ extends layout
 
 block content
   h1= title
-  p #{message} #{selected_employee}
+  p #{message} #{employee_details.selected}
+  p Employees left in E_E.txt #{employee_details.ee}
+  p Employees are in S_E.txt file #{employee_details.se}
