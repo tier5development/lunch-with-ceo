@@ -1,25 +1,109 @@
 extends layout
 
 block content
-	h1= title
-	p(style="width: 100%") #{message} 
-		strong #{employee_details.selected}
-	div(style="width: 100%")
-		div(style="float: left")
-			table
-				thead
-					tr: th Employees in E_E.txt
-				tbody
-					each ee, i in employee_details.ee
-						tr
-							td 
-								span(style="padding-top: 20px;") Name: #{ee}
-		div(style="float: left; margin-left: 20px")
-			table
-				thead
-					tr: th Employees in S_E.txt
-				tbody
-					each se, i in employee_details.se
-						tr
-							td 
-								span(style="padding-top: 20px;") Name: #{se}
+	section#banner
+		div.bg-color
+			header#header
+				div.container
+					div#mySidenav.sidenav
+						a.closebtn(href="javascript:void(0)" onclick="closeNav()") &times;
+						a(data-toggle="modal" href="#modalLoginAvatar") Login
+					span.pull-right.menu-icon(onclick="openNav()") ☰
+			div.container
+				div.row
+					div.inner.text-center
+						h1.logo-name Tier5
+						h2 Welcome to Lunch With CEO app
+						p Luckiest person of the week will go for a lunch treat with Jon(CEO of Tier5)
+
+	section#about.section-padding
+		div.container
+			div.row
+				div.col-md-12.text-center.marb-35
+					h1.header-h Winner of this week
+				div.col-md-1
+				div.col-md-10
+					div.col-md-6.col-sm-6
+						div.about-info
+							h2.heading Congratulations #{current_winner}!!
+							p Hey #{current_winner}. Congratulations! As you are the luckiest member of Tier5 who got a chance to go for a lunch treat with our CEO in this week.
+							p Now next, what you need to do is follow some steps as mentioned below,
+							div.details-list
+								ul
+									li
+										i.fa.fa-check  Let Jon know about your choice of place in Kolkata location only.
+									li
+										i.fa.fa-check  Be there on time with him.
+									li
+										i.fa.fa-check  Order whatever you want.
+									li
+										i.fa.fa-check  Celebrate and feel proud to be the luckiest member among whole tier5 team.
+					div.col-md-6.col-sm-6
+						img.img-responsive(src='images/res01.jpg' alt="")
+				div.col-md-1
+	section#menu-list.section-padding
+		div.container
+			div.row
+				div.col-md-12.text-center.marb-35
+					h1.header-h Tier5 Member List
+					p.header-p All Tier5 members. 
+						br/ Who are yet to be lucky or already enjoyed the lunch with CEO.
+
+				div.col-md-12.text-center#menu-flters
+					ul
+						li
+							a.filter.active(data-filter='.menu-restaurant') Show All Members
+						li
+							a.filter(data-filter='.breakfast') Previous Winners
+						li
+							a.filter(data-filter='.lunch') Upcoming winners
+				div#menu-wrapper
+					each pre_w, i in pw
+						div.breakfast.menu-restaurant
+							span.clearfix
+								a.menu-title(href="#" data-meal-img="assets/img/restaurant/rib.jpg") #{pre_w}
+								span.menu-line
+								span.menu-price Previous Winner
+
+					each up_w, i in uw
+						div.lunch.menu-restaurant
+							span.clearfix
+								a.menu-title(href="#" data-meal-img="assets/img/restaurant/rib.jpg") #{up_w}
+								span.menu-line
+								span.menu-price Upcoming winner
+
+	div.modal.fade#modalLoginAvatar(tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true")
+		div.modal-dialog.cascading-modal.modal-avatar.modal-sm(role="document")
+			div.modal-content
+				div.modal-header
+					img.img-responsive(src="/images/37884704_2232318033448286_7803726667960025088_n.jpg" alt="avatar")
+				div.modal-body.text-center.mb-1
+					h5.mt-1.mb-2 Jon Vaughn
+
+					div.md-form.ml-0.mr-0
+						input(id="pass" type="password" class="form-control form-control-sm validate ml-0")
+						label.ml-0.active(data-error="wrong" data-success="right" for="pass" style="font-size: 1rem;") Enter password						
+
+					div.text-center.mt-4
+						button#login.btn.btn-cyan.mt-1(disabled style="font-size: 1rem;") Login
+
+					div.ml-0
+						#message_area
+
+
+	footer.footer.text-center
+		div.footer-top
+			div.row
+				div.col-md-offset-3.col-md-6.text-center
+					div.widget
+						h4.widget-title Tier5
+						address EN-9, 8th Floor, Ray's IT park Building
+							br/ Salt Lake, Sector V, Kolkata, 700091
+					p.copyright.clear-float © Tier5. All Rights Reserved
+						div.credits
+							Developed by 
+							a San
+	script(src="javascripts/jquery.min.js")
+	script(src="javascripts/jquery.easing.min.js")
+	script(src="javascripts/bootstrap.min.js")
+	script(src="javascripts/custom.js")

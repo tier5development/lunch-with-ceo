@@ -9,11 +9,20 @@ function getRandomInt(max) {
 }
 
 function write_in_file(employee, new_data) {
+
+	fs.writeFile('winner.txt', employee, function(err, data){
+	    if (err) console.log(err);
+	});
+
 	fs.readFile('S_E.txt', function(err, buf) {
 		var byf = buf.toString() !== ''?  buf.toString() +','+ employee : employee;
 		fs.writeFile('S_E.txt', byf, function(err, data){
 		    if (err) console.log(err);
 		});
+	});
+
+	fs.writeFile('E_E.txt', new_data, function(err, data){
+	    if (err) console.log(err);
 	});
 
 	fs.writeFile('E_E.txt', new_data, function(err, data){
@@ -55,17 +64,51 @@ function lunch_with_ceo() {
 	});
 }
 
+function get_all_data() {
+	return new Promise((resolve, reject) => {
+		fs.readFile('winner.txt', function(err, buf) {
+			var data = {
+				cur_winner: ''
+			};
+
+			data.cur_winner = buf.toString();
+
+			fs.readFile('S_E.txt', function(err, prewin) {
+
+				data.pw = prewin.toString().split(",");
+
+				fs.readFile('E_E.txt', function(err, uw) {
+			    	data.uw = uw.toString().split(",");
+
+			    	resolve(data);
+			    });
+
+		    	
+		    });
+			
+		});
+	});
+}
+
 /* GET home page. */
 router.get('/', function(req, res, next) {
+	get_all_data().then((data) => {
+		res.render('index', { 
+			title:'Welcome to Lunch with CEO App',
+			current_winner: data.cur_winner,
+			uw: data.uw,
+			pw: data.pw
+		});
+	});
+});
+
+/* GET home page. */
+router.get('/get-new-winner', function(req, res, next) {
 	lunch_with_ceo().then((data) => {
 		if(data) {
-			res.render('index', { 
-				title:'Welcome to Lunch with CEO App',
-				message: "Wow! We found the lucky emplyoee for this week. That person's name is :: ",
-				employee_details: data
-			});
+			res.send({status: 200, success: true});
 		} else {
-			res.redirect('/');
+			res.redirect('/get-new-winner');
 		}
 	});
 });
