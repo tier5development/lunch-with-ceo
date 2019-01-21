@@ -7,7 +7,13 @@ block content
 				div.container
 					div#mySidenav.sidenav
 						a.closebtn(href="javascript:void(0)" onclick="closeNav()") &times;
-						a(data-toggle="modal" href="#modalLoginAvatar") Login
+						if !authorised
+							a(data-toggle="modal" href="#modalLoginAvatar") Login
+						else
+							a(id="new_winner" href="#") Get new winner
+							a(id="addMember" href="#") Add new member
+							a(id="deleteMember" href="#") Delete members
+							a(id="logout" href="#") Logout
 					span.pull-right.menu-icon(onclick="openNav()") ☰
 			div.container
 				div.row
@@ -37,7 +43,7 @@ block content
 									li
 										i.fa.fa-check  Order whatever you want.
 									li
-										i.fa.fa-check  Celebrate and feel proud to be the luckiest member among whole tier5 team.
+										i.fa.fa-check  Celebrate and feel proud to be the luckiest member among whole Tier5 team.
 					div.col-md-6.col-sm-6
 						img.img-responsive(src='images/res01.jpg' alt="")
 				div.col-md-1
@@ -62,15 +68,11 @@ block content
 						div.breakfast.menu-restaurant
 							span.clearfix
 								a.menu-title(href="#" data-meal-img="assets/img/restaurant/rib.jpg") #{pre_w}
-								span.menu-line
-								span.menu-price Previous Winner
 
 					each up_w, i in uw
 						div.lunch.menu-restaurant
 							span.clearfix
 								a.menu-title(href="#" data-meal-img="assets/img/restaurant/rib.jpg") #{up_w}
-								span.menu-line
-								span.menu-price Upcoming winner
 
 	div.modal.fade#modalLoginAvatar(tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true")
 		div.modal-dialog.cascading-modal.modal-avatar.modal-sm(role="document")
@@ -90,6 +92,8 @@ block content
 					div.ml-0
 						#message_area
 
+	
+
 
 	footer.footer.text-center
 		div.footer-top
@@ -106,4 +110,5 @@ block content
 	script(src="javascripts/jquery.min.js")
 	script(src="javascripts/jquery.easing.min.js")
 	script(src="javascripts/bootstrap.min.js")
+	script(src="javascripts/sweetalert.min.js")
 	script(src="javascripts/custom.js")

@@ -44,32 +44,168 @@ function closeNav() {
 		closeNav();
 	});
 
+  // Login button validation
   $("#pass").change(function() {
     if($("#pass").val() !== ''){
       $("#login").prop("disabled", false);
     }
   });
 
-  $("#login").click(function() {
-    if($("#pass").val() == "JV"){
+  // Get new winner of this week
+  $("#new_winner").click(function() {
+    $.ajax({
+      url: "/get-new-winner"
+    }).then(function(data) {
+      if(data.success) {
+        swal("Well done Boss!", "We are reloading the page to give you the new winner. Thanks.", "success");
+        setTimeout(function(){
+          window.location.href = '/';
+        }, 2000);
+      } else {
+        swal("I think some issue occured!", "Please login again and retry! Thanks.", "warning");
+      }
+    });
+  });
+  
+  // Add new member in the system
+  $("#addMember").click(function() {
+
+    swal({
+      title: "Add new name(s)!",
+      text: 'Please add all name as comma(,) separated. E.g. "A B,C,D,E F"',
+      type: "input",
+      showCancelButton: true,
+      closeOnConfirm: false,
+      inputPlaceholder: "New names"
+    }, function (inputValue) {
+      if (inputValue === false) return false;
+      if (inputValue === "") {
+        swal.showInputError("You need to provide at least one name!");
+        return false
+      }
+
       $.ajax({
-        url: "/get-new-winner"
+        url: '/add/new/member',
+        type: 'POST',
+        data: {
+          members: inputValue
+        }
       }).then(function(data) {
-        console.log(data);
         if(data.success) {
-          $("#message_area").html("<h3>Welcome Boss!</h3><h2>We are reloading the page to give you the new winner. Thanks.</h2>");
+          swal("Congratulations!", "We have updated the member list. Please wait we are refreshing the page once. Thanks.", "success");
           setTimeout(function(){
             window.location.href = '/';
           }, 2000);
         } else {
-          $("#message_area").html("<h3>I think some issue happend.</h3><h2>Please retry!</h2>");
+          swal("I think some issue occured!", "Please login again and retry! Thanks.", "warning");
+        }
+      });
+    });
+  });
+
+  // Delete member(s) from the system
+  $("#deleteMember").click(function() {
+    swal({
+      title: "Delete member(s)",
+      text: 'Please provide all name as comma(,) separated. E.g. "A B,C,D,E F"',
+      type: "input",
+      showCancelButton: true,
+      closeOnConfirm: false,
+      inputPlaceholder: "Provide name(s)"
+    }, function (inputValue) {
+      if (inputValue === false) return false;
+      if (inputValue === "") {
+        swal.showInputError("You need to provide at least one name!");
+        return false
+      }
+
+      $.ajax({
+        url: '/delete/member',
+        type: 'POST',
+        data: {
+          members: inputValue
+        }
+      }).then(function(data) {
+        if(data.success) {
+          if(data.couldnot_delete.length) {
+            swal({
+              title: "Problem while deleting",
+              text: "We couldn't find "+data.couldnot_delete,
+              type: "warning",
+              showCancelButton: false,
+              confirmButtonClass: "btn-danger",
+              confirmButtonText: "Okay, that is fine!",
+              closeOnConfirm: false
+            },
+            function(){
+              swal("Deleted!", "We have updated the member list.", "success");
+
+              setTimeout(function(){
+                  window.location.href = '/';
+              }, 2000);
+            });
+          } else {
+            swal("Congratulations!", "We have updated the member list. Please wait we are refreshing the page once. Thanks.", "success");
+
+            setTimeout(function(){
+                window.location.href = '/';
+            }, 2000);
+          }
+        } else {
+          swal("I think some issue occured!", "Please logout and login again to retry! Thanks.", "warning");
+        }
+      });
+    });
+  });
+
+  // Let admin to login to the system
+  $("#login").click(function() {
+    if($("#pass").val() !== ""){
+      $.ajax({
+        url: '/login',
+        type: 'POST',
+        data: {
+          pass: $("#pass").val()
+        }
+      }).then(function(data) {
+        console.log(data);
+        if(data.authorised && data.isadmin) {
+          swal("Welcome Boss!", "We are reloading the page to give you the new winner. Thanks.", "success");
+          setTimeout(function(){
+            window.location.href = '/';
+          }, 2000);
+        } else if(data.authorised && !data.isadmin) {
+          swal("Welcome HR!", "We are reloading the page to give you the new winner. Thanks.", "success");
+          setTimeout(function(){
+            window.location.href = '/';
+          }, 2000);
+        } else {
+          swal("I think some issue occured!", "Please login again and retry! Thanks.", "warning");
         }
       });
     } else {
       $("#message_area").html("<h3>Fuck off!</h3>");
+      swal("Fuck off!", "", "error");
     }
   });
 
+  
+  // Logout from the system
+  $("#logout").click(function() {
+    $.ajax({
+        url: '/logout'
+      }).then(function(data) {
+        console.log("data :: "+JSON.stringify(data));
+        if(data.success) {
+          swal("Thanks for using this platform!", "See you again.", "success");
+          setTimeout(function(){
+            window.location.href = '/';
+          }, 1000);
+        } else {
+          swal("I think some issue occured!", "Please refresh the page and retry! Thanks.", "warning");
+        }
+      });
+  });
 
   $(".modal-wide").on("show.bs.modal", function() {
     var height = $(window).height() - 200;
