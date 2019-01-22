@@ -60,7 +60,7 @@ function closeNav() {
         swal("Well done Boss!", "We are reloading the page to give you the new winner. Thanks.", "success");
         setTimeout(function(){
           window.location.href = '/';
-        }, 2000);
+        }, 3000);
       } else {
         swal("I think some issue occured!", "Please login again and retry! Thanks.", "warning");
       }
@@ -72,14 +72,14 @@ function closeNav() {
 
     swal({
       title: "Add new name(s)!",
-      text: 'Please add all name as comma(,) separated. E.g. "A B,C,D,E F"',
+      text: 'Please add all name as comma(,) separated and in small letter. E.g. "a b,c,d,e f"',
       type: "input",
       showCancelButton: true,
       closeOnConfirm: false,
       inputPlaceholder: "New names"
     }, function (inputValue) {
       if (inputValue === false) return false;
-      if (inputValue === "") {
+      if (inputValue.trim() === "") {
         swal.showInputError("You need to provide at least one name!");
         return false
       }
@@ -95,7 +95,7 @@ function closeNav() {
           swal("Congratulations!", "We have updated the member list. Please wait we are refreshing the page once. Thanks.", "success");
           setTimeout(function(){
             window.location.href = '/';
-          }, 2000);
+          }, 3000);
         } else {
           swal("I think some issue occured!", "Please login again and retry! Thanks.", "warning");
         }
@@ -107,18 +107,18 @@ function closeNav() {
   $("#deleteMember").click(function() {
     swal({
       title: "Delete member(s)",
-      text: 'Please provide all name as comma(,) separated. E.g. "A B,C,D,E F"',
+      text: 'Please provide all name as comma(,) separated and in small letter. E.g. "a b,c,d,e f"',
       type: "input",
       showCancelButton: true,
       closeOnConfirm: false,
       inputPlaceholder: "Provide name(s)"
     }, function (inputValue) {
       if (inputValue === false) return false;
-      if (inputValue === "") {
+      if (inputValue.trim() === "") {
         swal.showInputError("You need to provide at least one name!");
         return false
       }
-
+      console.log("inputValue :: "+inputValue);
       $.ajax({
         url: '/delete/member',
         type: 'POST',
@@ -138,7 +138,7 @@ function closeNav() {
               closeOnConfirm: false
             },
             function(){
-              swal("Deleted!", "We have updated the member list.", "success");
+              swal("Deleted Few!", "We have updated the member list.", "success");
 
               setTimeout(function(){
                   window.location.href = '/';
@@ -170,15 +170,15 @@ function closeNav() {
       }).then(function(data) {
         console.log(data);
         if(data.authorised && data.isadmin) {
-          swal("Welcome Boss!", "We are reloading the page to give you the new winner. Thanks.", "success");
+          swal("Welcome Boss!", "We are reloading the page to give you full access of the platform. Thanks.", "success");
           setTimeout(function(){
             window.location.href = '/';
-          }, 2000);
+          }, 3000);
         } else if(data.authorised && !data.isadmin) {
-          swal("Welcome HR!", "We are reloading the page to give you the new winner. Thanks.", "success");
+          swal("Welcome HR!", "We are reloading the page to give you full access of the platform. Thanks.", "success");
           setTimeout(function(){
             window.location.href = '/';
-          }, 2000);
+          }, 3000);
         } else {
           swal("I think some issue occured!", "Please login again and retry! Thanks.", "warning");
         }
@@ -200,7 +200,7 @@ function closeNav() {
           swal("Thanks for using this platform!", "See you again.", "success");
           setTimeout(function(){
             window.location.href = '/';
-          }, 1000);
+          }, 2000);
         } else {
           swal("I think some issue occured!", "Please refresh the page and retry! Thanks.", "warning");
         }

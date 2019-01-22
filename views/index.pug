@@ -10,9 +10,13 @@ block content
 						if !authorised
 							a(data-toggle="modal" href="#modalLoginAvatar") Login
 						else
-							a(id="new_winner" href="#") Get new winner
+							if isadmin=='true'
+								a Welcome Jon
+								a(id="new_winner" href="#") Get new winner
+							if isadmin!=='true'
+								a Welcome HR
 							a(id="addMember" href="#") Add new member
-							a(id="deleteMember" href="#") Delete members
+							a(id="deleteMember" href="#") Delete member
 							a(id="logout" href="#") Logout
 					span.pull-right.menu-icon(onclick="openNav()") ☰
 			div.container
@@ -31,7 +35,7 @@ block content
 				div.col-md-10
 					div.col-md-6.col-sm-6
 						div.about-info
-							h2.heading Congratulations #{current_winner}!!
+							h2.heading(style="text-transform: capitalize;") Congratulations #{current_winner}!!
 							p Hey #{current_winner}. Congratulations! As you are the luckiest member of Tier5 who got a chance to go for a lunch treat with our CEO in this week.
 							p Now next, what you need to do is follow some steps as mentioned below,
 							div.details-list
@@ -106,7 +110,7 @@ block content
 					p.copyright.clear-float © Tier5. All Rights Reserved
 						div.credits
 							Developed by 
-							a San
+							a(href="#") San
 	script(src="javascripts/jquery.min.js")
 	script(src="javascripts/jquery.easing.min.js")
 	script(src="javascripts/bootstrap.min.js")
