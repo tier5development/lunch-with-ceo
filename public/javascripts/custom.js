@@ -118,7 +118,7 @@ function closeNav() {
         swal.showInputError("You need to provide at least one name!");
         return false
       }
-      console.log("inputValue :: "+inputValue);
+      
       $.ajax({
         url: '/delete/member',
         type: 'POST',
@@ -168,7 +168,6 @@ function closeNav() {
           pass: $("#pass").val()
         }
       }).then(function(data) {
-        console.log(data);
         if(data.authorised && data.isadmin) {
           swal("Welcome Boss!", "We are reloading the page to give you full access of the platform. Thanks.", "success");
           setTimeout(function(){
@@ -195,7 +194,6 @@ function closeNav() {
     $.ajax({
         url: '/logout'
       }).then(function(data) {
-        console.log("data :: "+JSON.stringify(data));
         if(data.success) {
           swal("Thanks for using this platform!", "See you again.", "success");
           setTimeout(function(){
