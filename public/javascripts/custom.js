@@ -88,7 +88,7 @@ function closeNav() {
         url: '/add/new/member',
         type: 'POST',
         data: {
-          members: inputValue.trim()
+          members: inputValue.trim().toLowerCase()
         }
       }).then(function(data) {
         if(data.success) {
@@ -123,7 +123,7 @@ function closeNav() {
         url: '/delete/member',
         type: 'POST',
         data: {
-          members: inputValue.trim()
+          members: inputValue.trim().toLowerCase()
         }
       }).then(function(data) {
         if(data.success) {
