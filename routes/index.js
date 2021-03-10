@@ -10,18 +10,19 @@ function getRandomInt(max) {
 
 function write_in_file(employee, new_data) {
 
-	fs.writeFile('winner.txt', employee, function(err, data){
+	fs.writeFile('winner.txt', employee.toString(), function(err, data){
 	    if (err) console.log(err);
 	});
 
 	fs.readFile('S_E.txt', function(err, buf) {
-		var byf = buf.toString() !== ''?  buf.toString() +','+ employee : employee;
+		console.log("buf :: ", buf.toString())
+		var byf = buf.toString() !== ''?  buf.toString() +','+ employee.toString() : employee.toString();
 		fs.writeFile('S_E.txt', byf, function(err, data){
 		    if (err) console.log(err);
 		});
 	});
 
-	fs.writeFile('E_E.txt', new_data, function(err, data){
+	fs.writeFile('E_E.txt', new_data.toString(), function(err, data){
 	    if (err) console.log(err);
 	});
 }
@@ -48,6 +49,7 @@ function lunch_with_ceo() {
 
 				var selected_employee = getRandomInt(all_employees.length);
 				var other_employees = all_employees.filter(item => item !== all_employees[selected_employee]);
+				console.log("selected_employee :: "+ all_employees[selected_employee])
 			    write_in_file(all_employees[selected_employee], other_employees);
 			    fs.readFile('S_E.txt', function(err, buff) {
 			    	resolve({selected: all_employees[selected_employee], ee: other_employees, se: buff.toString().split(",")});
@@ -138,7 +140,7 @@ function delete_member(members) {
 router.get('/', function(req, res, next) {
 	get_all_data().then((data) => {
 		res.render('index', { 
-			title:'Welcome to Lunch with CEO App',
+			title:'Welcome to Lunch with CEO or MD App',
 			current_winner: data.cur_winner,
 			uw: data.uw,
 			pw: data.pw,

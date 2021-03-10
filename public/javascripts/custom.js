@@ -54,7 +54,8 @@ function closeNav() {
   // Get new winner of this week
   $("#new_winner").click(function() {
     $.ajax({
-      url: "/get-new-winner"
+      url: "/get-new-winner",
+      type: 'GET',
     }).then(function(data) {
       if(data.success) {
         swal("Well done Boss!", "We are reloading the page to give you the new winner. Thanks.", "success");
